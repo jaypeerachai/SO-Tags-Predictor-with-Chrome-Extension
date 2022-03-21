@@ -11,6 +11,6 @@ Flask Setting
 Chrome Extension Setting
 1. Open `chrome://extensions` in the Chrome browser
 2. Click on the `Developer Mode` button
-3. Click on the `Load unpacked extension...` button
+3. Click on the `Load unpacked` button
 4. Select the extension folder
 5. Enable the extension

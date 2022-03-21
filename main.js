@@ -70,10 +70,31 @@ function display_results(output_json) {
             concat_result = tag + ": " + prob;
             opt.value = concat_result;
             opt.innerHTML = concat_result;
+            opt.id = "tag_options";
             opt.style.marginTop = "4px";
             opt.style.marginBottom = "-2px";
             opt.style.marginLeft = "4px";
             tag_option.appendChild(opt);
+            opt.addEventListener('dblclick', function() {
+                chrome.extension.getBackgroundPage().console.log('dblclick');
+                var api_key = "8hvLA7uVPEIp6wwaqNOF5w((";
+                var site = "stackoverflow";
+                var tag_name = this.value.split(':')[0]
+                var url = "https://api.stackexchange.com/2.3/tags/{" + tag_name + "}/wikis"
+                var tag_wiki_xhr = new XMLHttpRequest();
+                tag_wiki_xhr.open("GET", url+"?site="+site+"&key="+api_key, true);
+                tag_wiki_xhr.onreadystatechange = function () {
+                    if (tag_wiki_xhr.readyState == XMLHttpRequest.DONE) {
+                        var status = tag_wiki_xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            var tag_wiki_json = JSON.parse(tag_wiki_xhr.responseText);
+                            var excerpt = tag_wiki_json['items'][0]['excerpt'];
+                            alert(tag_name + "\n▬▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬▬▬\n\n" + excerpt);
+                        }
+                    }
+                };
+                tag_wiki_xhr.send();
+            });
         }
     }
 }
@@ -92,7 +113,6 @@ function get_select_values(select) {
     return result;
 }
 
-// chrome.extension.getBackgroundPage().console.log(submit);
 submit_button.addEventListener('click', function() {
     chrome.extension.getBackgroundPage().console.log('submit');
     var loading_div = document.getElementById('loading');

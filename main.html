@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SO Tags Recommender</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>      
+    <h2 id="header">SO Tags Recommender</h2>
+    <div id="main_content">
+        <p style="text-align: left; margin-left: 18px;">Title:</p>
+        <textarea autofocus id="title" rows="2"></textarea>
+        <p style="text-align: left;  margin-left: 18px;">Description:</p>
+        <textarea autofocus id="description" rows="6"></textarea>
+        <table id = "user_choice">
+            <tr>
+                <td id = "left_part">
+                    <p>Select number of tags (k):</p>
+                    <input id="k" type="number" min="1" value="5" max="5" required/>
+                </td>
+                <td rowspan="2" style="padding-left: 20px;">
+                    <p>Select prediction models: </p>
+                    <form action="" style="text-align: left;">
+                        <input type="radio" id="bow" name="model" value="bow" checked>
+                        <label for="html">BoW + Logistic Regression</label><br><br>
+                        <input type="radio" id="ngram" name="model" value="ngram">
+                        <label for="css">N-Gram + MultinomialNB</label><br><br>
+                        <input type="radio" id="tfidf" name="model" value="tfidf">
+                        <label for="javascript">TF-IDF + MLPClassifier</label>
+                    </form> 
+                </td>
+            </tr>
+            <tr>
+                <td id = "right_part">
+                    <p>Specify decision threshold:</p>
+                    <input id="threshold" type="number" min="0.1" value="0.5" max="0.9" step="0.1" required/>
+                </td>
+            </tr>
+        </table>
+
+        <div id="tags">
+            <div id="loading">
+                <img id="load" src="images\loading.gif" alt="loading" />
+            </div>
+            <div id="tags_list">
+                <p>Recommended Tags</p>
+                <select id="tag_option" multiple></select>
+            </div>
+            <div id="sorry"></div>
+        </div>
+        
+        <div id="button_zone">
+            <center><input class="button" id="submit" type="button" value="Go"/></center>
+            <center>
+                <table id = "button_table">
+                    <tr>
+                        <td>
+                            <center><input class="button" id="add_tags" type="button" value="Add"/></center>
+                        </td>
+                        <td>
+                            <center><input class="button" id="reset" type="button" value="Reset"/></center>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+
+    </div>
+</body>
+
+<script src="main.js"></script>
+
+</html>

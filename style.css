@@ -1,0 +1,109 @@
+/* body width and heigh */
+html {
+    background-color: #FAFAAA;
+}
+
+body {
+    width: 400px;
+    height: 100%;
+    margin: 20px;
+}
+
+#header {
+    text-align: center;
+}
+
+/* main_content center */
+#main_content {
+    text-align: center;
+}
+
+#title {
+    width: 90%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-kerning: auto;
+    font-size: 12;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-variant-ligatures: normal;
+    font-weight: normal;
+}
+
+#description {
+    width: 90%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-kerning: auto;
+    font-size: 12;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-variant-ligatures: normal;
+    font-weight: normal;
+}
+
+#user_choice {
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#left_part {
+    border-right: 1px solid gray; width: 50%;
+}
+
+#right_part {
+    border-right: 1px solid gray;
+}
+
+#loading {
+    display: none;
+}
+
+#tags_list {
+    display: none;
+}
+
+#tag_option {
+    width: 40%;
+}
+
+#sorry {
+    color: red;
+    display: none;
+}
+
+#load {
+    background-color: #FAFAAA;
+    width: 60%;
+    height: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+#button_zone {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.button {
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+}
+
+#button_table {
+    text-align: center;
+}
+
+#add_tags{
+    display: none;
+    text-align: center;
+}
+
+#reset{
+    display: none;
+    text-align: center;
+}

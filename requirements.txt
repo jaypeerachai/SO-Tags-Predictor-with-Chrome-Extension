@@ -72,5 +72,4 @@ traitlets==5.1.1
 urllib3==1.26.8
 wcwidth==0.2.5
 Werkzeug==2.0.3
-wordcloud==1.8.1
 wrapt==1.13.3

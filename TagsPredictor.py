@@ -87,12 +87,12 @@ def make_prediction(model, input_df, k, threshold):
     # indexes = np.where(prediction[0] == 1)
     indexes = np.where(probability[0] >= threshold)
     predicted_tags = [y_names[index] for index in indexes[0]]
-    predicted_prob = [round(probability[0][index], 3) for index in indexes[0]]
+    predicted_prob = [round(probability[0][index], 4) for index in indexes[0]]
     tag_results = dict(zip(predicted_tags, predicted_prob))
     tag_results = dict(sorted(tag_results.items(), key=lambda x: x[1], reverse=True))
     if len(tag_results) > k:
         tag_results = dict(list(tag_results.items())[:k])
-    tag_results = {key: "{:.3f} %".format(value) for key, value in tag_results.items()}
+    tag_results = {key: "{:.2f} %".format(value*100) for key, value in tag_results.items()}
     return tag_results
 
 

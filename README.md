@@ -2,7 +2,7 @@
 
 Flask Setting
 1. Create a virtual environment (e.g. `python -m venv <venv_name>`)
-2. Activate the virtual environment (i.e. `<venv_name>/bin/activate`)
+2. Activate the virtual environment (i.e. `source <venv_name>/bin/activate`)
 3. Go to the extension folder (e.g. `cd <extension_folder>`)
 4. Install the dependencies (i.e. `pip install -r requirements.txt`)
 5. Specify the project as a Flask application (i.e. `export FLASK_APP=TagsPredictor.py;` for Bash and `set FLASK_APP=TagsPredictor` for CMD))

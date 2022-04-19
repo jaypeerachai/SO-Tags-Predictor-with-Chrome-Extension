@@ -3,9 +3,10 @@ var add_tag_button = document.getElementById("add_tags");
 var submit_button = document.getElementById("submit");
 var reset_button = document.getElementById("reset");
 
+// send request using XMLHttpRequest
 function send_input(input_json){
-    // chrome.extension.getBackgroundPage().console.log(input_json);
     var xhr = new XMLHttpRequest();
+    // flask local server
     var url = "http://127.0.0.1:5000/";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -38,6 +39,7 @@ function send_input(input_json){
     xhr.send(input_json);
 }
 
+// function to handle about result display
 function display_results(output_json) {
     var loading_div = document.getElementById("loading");
     var sorry_div = document.getElementById("sorry");
@@ -100,6 +102,7 @@ function display_results(output_json) {
     }
 }
 
+// function to handle selected tags
 function get_select_values(select) {
     var result = [];
     var options = select && select.options;

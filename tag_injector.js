@@ -5,9 +5,10 @@ for (var i = 0; i < tags.length; i++) {
     tags_fill += tag + " ";
 }
 
+// inject the tag(s)
 fill_tag(tags_fill);
 
-
+// function to fill the tag(s)
 function fill_tag(data){
     fillField(document.querySelector('input[id="tageditor-replacing-tagnames--input"]'), data);
 }

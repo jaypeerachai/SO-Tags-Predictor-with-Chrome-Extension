@@ -5,6 +5,11 @@ import pickle
 import json
 import numpy as np
 import pandas as pd
+
+from simpletransformers.classification import (
+    MultiLabelClassificationModel, MultiLabelClassificationArgs
+)
+
 from Preprocessing import clean_text, tokenize, vectorize
 
 app = Flask(__name__)
@@ -14,6 +19,7 @@ BEST_MODEL_PATH = {
     'bow': 'models/bow_logis_1.0_l1_liblinear.pkl',
     'ngram': 'models/ngram_multinomialNB_0.001.pkl',
     'tfidf': 'models/tfidf_mlp_1e-05_adaptive_False_0.0001_1000.pkl',
+    'bert': 'models/distilbert'
 }
 
 @app.route('/', methods = ['POST'])
@@ -25,35 +31,50 @@ def start_flask():
     return json.dumps(tag_results)
 
 def predict_tags(input_json):
-    preprocessed_input = preprocess_input(input_json)
-    vectorized_input = vectorize_input(preprocessed_input, input_json['model'])
-    predicted_tags = make_prediction(
-        load_model(input_json['model']), 
-        vectorized_input, 
-        input_json['k'], 
-        input_json['threshold'],
-    )
+    model_choice = input_json['model']
+    preprocessed_input = preprocess_input(input_json, model_choice)
+    if model_choice != 'bert':
+        vectorized_input = vectorize_input(preprocessed_input, model_choice)
+        predicted_tags = make_prediction(
+            input_json['model'],
+            load_model(model_choice), 
+            vectorized_input, 
+            input_json['k'], 
+            input_json['threshold'],
+        )
+    else:
+        predicted_tags = make_prediction(
+            input_json['model'],
+            load_model(model_choice), 
+            preprocessed_input, 
+            input_json['k'], 
+            input_json['threshold'],
+        )
     return predicted_tags
 
-def preprocess_input(input_json):
+def preprocess_input(input_json, model_choice):
     title = input_json['title']
     body = input_json['description']
     cleaned_title = clean_text(title)
     cleaned_body = clean_text(body)
-    title_length = len(cleaned_title.split())
-    body_length = len(cleaned_body.split())
-    have_code = 0
-    have_image = 0
     text = title + ' ' + title + ' ' + body
-    tokenized_text = tokenize(text)
 
-    input_df = pd.DataFrame({
-        'have_image': [have_image], 
-        'have_code': [have_code], 
-        'title_length': [title_length], 
-        'body_length': [body_length], 
-        'text': [tokenized_text]
-    })
+    if model_choice != 'bert':
+        title_length = len(cleaned_title.split())
+        body_length = len(cleaned_body.split())
+        have_code = 0
+        have_image = 0
+        tokenized_text = tokenize(text)
+
+        input_df = pd.DataFrame({
+            'have_image': [have_image], 
+            'have_code': [have_code], 
+            'title_length': [title_length], 
+            'body_length': [body_length], 
+            'text': [tokenized_text]
+        })
+    else:
+        input_df = text
 
     return input_df
 
@@ -70,21 +91,31 @@ def load_model(model_choice):
     elif model_choice == 'ngram':
         with open(BEST_MODEL_PATH['ngram'], 'rb') as f:
             model = pickle.load(f)
-    else:
-        # not done yet
+    elif model_choice == 'tfidf':
         with open(BEST_MODEL_PATH['tfidf'], 'rb') as f:
             model = pickle.load(f)
+    else:
+        model = MultiLabelClassificationModel(
+            "distilbert", BEST_MODEL_PATH['bert'],
+            use_cuda=False,
+        )
+    print(model)
     return model
 
-def make_prediction(model, input_df, k, threshold):
+def make_prediction(model_choice, model, input_df, k, threshold):
     k = int(k)
     threshold = float(threshold)
     tag_dict = {}
-    prediction = model.predict(input_df.to_numpy())
-    probability = model.predict_proba(input_df.to_numpy())
     with open('vectorizers/y_names.pkl', 'rb') as f:
         y_names = pickle.load(f)
-    # indexes = np.where(prediction[0] == 1)
+
+    if model_choice != 'bert':
+        prediction = model.predict(input_df.to_numpy())
+        probability = model.predict_proba(input_df.to_numpy())
+    else:
+        print(input_df)
+        predictions, probability = model.predict(input_df)
+
     indexes = np.where(probability[0] >= threshold)
     predicted_tags = [y_names[index] for index in indexes[0]]
     predicted_prob = [round(probability[0][index], 4) for index in indexes[0]]
@@ -93,6 +124,7 @@ def make_prediction(model, input_df, k, threshold):
     if len(tag_results) > k:
         tag_results = dict(list(tag_results.items())[:k])
     tag_results = {key: "{:.2f} %".format(value*100) for key, value in tag_results.items()}
+
     return tag_results
 
 

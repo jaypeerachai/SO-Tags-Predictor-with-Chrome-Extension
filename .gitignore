@@ -1,3 +1,4 @@
 __pycache__/
 .DS_Store
 ngram_vectorizer.pkl
+distilbert/

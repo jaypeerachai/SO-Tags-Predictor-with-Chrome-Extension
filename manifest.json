@@ -17,13 +17,14 @@
     "content_scripts":[
         {
             "matches": ["<all_urls>"], 
-            "js": ["main.js", "injector.js"]
+            "js": ["main.js", "tag_injector.js", "text_injector.js"]
         }
     ],
     "background": {
         "scripts": [
             "main.js",
-            "injector.js"
+            "tag_injector.js",
+            "text_injector.js"
         ]
      },
     "permissions": [

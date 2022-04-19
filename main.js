@@ -1,3 +1,4 @@
+var add_text_button = document.getElementById("add_text");
 var add_tag_button = document.getElementById("add_tags");
 var submit_button = document.getElementById("submit");
 var reset_button = document.getElementById("reset");
@@ -113,6 +114,7 @@ function get_select_values(select) {
     return result;
 }
 
+// send request with user input to flask
 submit_button.addEventListener('click', function() {
     chrome.extension.getBackgroundPage().console.log('submit');
     var loading_div = document.getElementById('loading');
@@ -134,6 +136,7 @@ submit_button.addEventListener('click', function() {
     send_input(input_json_string);
 });
 
+// clear the recommended tags
 reset_button.addEventListener('click', function() {
     chrome.extension.getBackgroundPage().console.log('reset');
     var tag_div = document.getElementById('tags_list');
@@ -141,11 +144,26 @@ reset_button.addEventListener('click', function() {
     add_tag_button.style.display = 'none';
     reset_button.style.display = 'none';
     submit_button.style.display = 'block';
-
 });
 
+// inject title and body into the input area of tag on the "ask" page on Stackoverflow
+add_text_button.addEventListener('click', function() {
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+    chrome.extension.getBackgroundPage().console.log(title);
+    chrome.tabs.executeScript({
+        code: `var title = "${title}"; var description = "${description}";`
+    }, function() {
+        chrome.tabs.executeScript({
+            file: 'text_injector.js'
+        });
+    });
+});
+
+
+
+// inject tag(s) into the input area of tag on the "ask" page on Stackoverflow
 add_tag_button.addEventListener('click', function() {
-    console.log('add_tags');
     var tag_option = document.getElementById("tag_option");
     var selected_tags = get_select_values(tag_option);
     chrome.extension.getBackgroundPage().console.log(selected_tags);
@@ -160,7 +178,7 @@ add_tag_button.addEventListener('click', function() {
         code: `var tags = "${tag_list}";`
     }, function() {
         chrome.tabs.executeScript({
-            file: 'injector.js'
+            file: 'tag_injector.js'
         });
     });
 });

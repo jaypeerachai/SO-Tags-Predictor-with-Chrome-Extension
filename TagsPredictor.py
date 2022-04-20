@@ -113,7 +113,6 @@ def make_prediction(model_choice, model, input_df, k, threshold):
         prediction = model.predict(input_df.to_numpy())
         probability = model.predict_proba(input_df.to_numpy())
     else:
-        print(input_df)
         predictions, probability = model.predict(input_df)
 
     indexes = np.where(probability[0] >= threshold)

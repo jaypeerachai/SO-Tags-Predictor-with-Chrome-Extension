@@ -1,0 +1,29 @@
+# TF-IDF/BoW
+https://stackoverflow.com/questions/71587759/merge-2-columns-from-a-single-dataframe-in-pandas
+
+Merge 2 columns from a single Dataframe in Pandas
+
+I want to merge 2 columns of the same dataframe, but by using some specific condition. consider the following dataframe : The conditions are: If the Number-first column has a alphanumeric value and the Number-second Column has a Nan value or a '' (empty string) -> the Result column should only consider the value from Number-first If the Number-first column has a Nan or '' (empty string) value and the Number-second Column has a alphanumeric value -> the Result column should only consider the value from Number-second If the values from both the columns are alphanumeric the result column should consist of value from Number-first and Number-second, which are separated by a '-' If both the Columns have Nan or empty string values, the result should consist of a '' (empty string) value Following would be the output for the above dataframe: I have been unsuccessful using the .select method and providing the above conditions. Thanks in advance for the help ! below is the code snippet of the conditions, which don't seem to work for me:
+
+# BOW
+https://stackoverflow.com/questions/71589414/how-can-i-make-javascript-automatically-scroll-and-make-a-scroll-bar-in-html
+
+How can I make javascript automatically scroll and make a scroll bar in HTML?
+
+I'm having trouble making my website have a scroll bar and make it automatically scroll. It's a simple chat website, it's just a simple project. This is the website: https://chat.jchs.repl.co/ You can fork the code with this (you have to make an account first): https://replit.com/@jchs/chat#html/index.html If you would like to see the index.html code before making a comment:
+
+
+# BERT
+https://stackoverflow.com/questions/38987/how-do-i-merge-two-dictionaries-in-a-single-expression-take-union-of-dictionari
+
+How do I merge two dictionaries in a single expression (take union of dictionaries)?
+
+I want to merge two dictionaries into a new dictionary. Using x.update(y) modifies x in-place instead of creating a new dictionary. I also want the last-one-wins conflict-handling of dict.update() as well.
+
+
+# N-Gram
+https://stackoverflow.com/questions/71589681/how-to-autowire-a-resourcehandlerregistry-bean-not-found-on-application-startup
+
+How to autowire a ResourceHandlerRegistry bean not found on application startup
+
+We've recently updated an application with a configuration class that uses the ResourceHandlerRegistry class explained here The application starts up fine in IntelliJ but when packaged into a JAR and run from the command line, startup fails because of this error: IntelliJ also highlights that it cannot find an autowire candidate for the bean. We are using Spring Boot v2.3.12.RELEASE and Spring v5.2.15.RELEASE. Any help is welcome.
